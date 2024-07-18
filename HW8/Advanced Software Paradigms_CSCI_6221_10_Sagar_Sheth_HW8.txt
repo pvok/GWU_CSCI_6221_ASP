@@ -1,0 +1,117 @@
+/******************************************************************************
+
+                            Online Prolog Compiler.
+                Code, Compile, Run and Debug Prolog program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+read_int(Int) :-
+    write('Enter an integer: '),
+    read_line_to_codes(user_input, Codes),
+    number_codes(Int, Codes).
+
+read_student(Student) :-
+    write('Enter student name: '),
+    read_line_to_string(user_input, Name),
+    write('Enter HW1 score: '),
+    read_int(S1),
+    write('Enter HW2 score: '),
+    read_int(S2),
+    write('Enter HW3 score: '),
+    read_int(S3),
+    write('Enter Mid Term score: '),
+    read_int(S4),
+    write('Enter Final Term score: '),
+    read_int(S5),
+    write('Enter Project score: '),
+    read_int(S6),
+    Student = student(Name, S1, S2, S3, S4, S5, S6).
+	
+gpa(FINAL,R):-
+    FINAL >= 90, FINAL =<100 -> R='A';
+	FINAL >= 85, FINAL <90 -> R='A-';
+    FINAL >= 80, FINAL <85 -> R='B+';
+    FINAL >= 75, FINAL <80 -> R='B';
+    FINAL >= 70, FINAL <75 -> R='B-';
+    FINAL >= 65, FINAL <70 -> R='C+';
+    FINAL >= 60, FINAL <70 -> R='C';
+    FINAL >= 1, FINAL <60 -> R='F'.	
+
+average_score(student(_, S1, S2, S3, S4, S5, S6), GPA) :-
+    PROJECT is S6  * 40 /100,
+    HW is (S1 + S2 + S3) * 20 / 300 ,    
+    EXAM is (S4 + S5) * 40 / 200 ,    
+    FINAL is HW + EXAM + PROJECT,
+    
+    gpa(FINAL,R),
+    GPA=R.
+
+query_student(Students) :-
+    write('Enter student name to calculate GPA: '),
+    read_line_to_string(user_input, Name),
+    (   member(Student, Students),
+        Student = student(Name, _, _, _, _, _, _)
+    ->  average_score(Student, GPA),
+        write('The GPA for '), write(Name),
+        write(' is: '), write(GPA), nl
+    ;   write('Student not found'), nl
+    ),
+	write('Do you want to query another student? (y/n): '),
+    read_line_to_string(user_input,Response),
+    ( Response = "y" ->
+        query_student(Students)
+    ; Response = "n" ->
+        true
+    ; write('Invalid response. Please enter y or n.'), nl, 
+        query_student(Students)
+    ).
+
+write_list([]).
+write_list([H|T]) :- write(H), nl, write_list(T).
+
+find_students_by_gpa(GPA, Students, Result) :-
+    findall(Name, (member(student(Name, S1, S2, S3, S4, S5, S6), Students),
+                   PROJECT is S6 * 40 / 100,
+                   HW is (S1 + S2 + S3) * 20 / 300,
+                   EXAM is (S4 + S5) * 40 / 200,
+                   FINAL is HW + EXAM + PROJECT,
+                   gpa(FINAL, R), R = GPA), Result),
+    length(Result, Length),
+    (   Length = 0 ->
+        write('No students found with GPA '), write(GPA), nl
+    ;   write('The following students have GPA '), write(GPA), write(':'), nl,
+        write_list(Result), nl
+    ),
+    write('Do you want to search for another GPA? (y/n): '),
+    read_line_to_string(user_input, Response),
+    (   Response = "y" ->
+        find_gpa_loop(Students)
+    ;   Response = "n" ->
+        true
+    ;   write('Invalid response. Please enter y or n.'), nl,
+        find_gpa_loop(Students)
+    ).
+
+find_gpa_loop(Students) :-
+    write('Enter GPA to search for: '),
+    read_line_to_string(user_input, GPA),
+    atom_string(Atom, GPA),
+    find_students_by_gpa(Atom, Students, Result).
+
+main :-
+    write('Enter number of students: '),
+    read_int(N),nl,
+    read_students(N, Students),
+	query_student(Students),
+	find_gpa_loop(Students),
+    halt.
+
+read_students(0, []).
+read_students(N, [Student|Rest]) :-
+    write('Enter student '), write(N), nl,
+    read_student(Student),
+    N1 is N-1,
+    read_students(N1, Rest).
+
+:- main.

@@ -1,0 +1,9 @@
+EVEN=(
+	in[x:0..12] -> 
+		if(x%2==0) 
+			then(out[x]->EVEN)).
+TRIPLE=(
+	in[y:0..12]->
+		if (y % 3 == 0) 
+			then(out[y]->TRIPLE)).
+||TEST6=(TRIPLE||EVEN).

@@ -1,0 +1,28 @@
+$var1 = 2;
+$var2 = 3;
+
+sub innersum {
+    $var3=$var1+$var2;
+    print "innersum:         $var3\n\n";
+}
+
+sub changelocalsum {
+    my $var1 = 9;
+    my $var2 = 20;
+    my $var3=$var1+$var2;
+    print "changelocalsum:   $var3\n\n";
+
+}
+
+sub changedynamicsum {
+    local $var1 = 5;
+    local $var2 = 6;
+    local $var3=$var1+$var2;
+    print "changedynamicsum: $var3\n\n";
+
+    &innersum
+    &changelocalsum
+}
+
+&innersum
+&changedynamicsum

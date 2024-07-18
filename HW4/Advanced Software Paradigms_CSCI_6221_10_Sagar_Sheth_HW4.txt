@@ -1,0 +1,40 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+
+void GetPrimeRange(int n1, int n2)
+{
+    int i,j,flag,temp;
+    if(n1>n2)
+    {
+        temp=n2;
+        n2=n1;
+        n1=temp;
+    }
+    for(i=n1;i<=n2;i++)
+    {
+        flag=0;
+        for(j=2;j<=i/2;j++)
+        {
+            if(i%j==0)
+            {
+                flag=1;
+                break;
+            }
+        }
+        if(flag==0)
+        {
+            printf("%d is a prime number.\n", i);
+        }
+    }
+}
+int main() {
+    int n1,n2;
+    printf("Enter 2 positive integers: \n");
+    printf("Enter First positive integer: \n");
+    scanf("%d", &n1);
+    printf("Enter Second positive integer: \n");
+    scanf("%d", &n2);
+    void (*IndirectGetPrimeRange)(int a, int b)=GetPrimeRange;
+    IndirectGetPrimeRange(n1,n2);
+    
+}

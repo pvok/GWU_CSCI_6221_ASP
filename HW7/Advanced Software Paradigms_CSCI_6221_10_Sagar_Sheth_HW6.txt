@@ -1,0 +1,13 @@
+main :: IO ()
+main = do
+  putStrLn "Enter a string:"
+  input <- getLine
+  let result = map (\c -> if c == '(' then ')' else if c == ')' then '(' else c) input
+  let result2 = map (\c -> if c == '{' then '}' else if c == '}' then '{' else c) result
+  let result3 = map (\c -> if c == '[' then ']' else if c == ']' then '[' else c) result2
+  let reversed = reverseString result3
+  putStrLn ("Result: " ++ reversed)
+
+reverseString :: String -> String
+reverseString [] = [] -- Base case: empty string
+reverseString (x:xs) = reverseString xs ++ [x]

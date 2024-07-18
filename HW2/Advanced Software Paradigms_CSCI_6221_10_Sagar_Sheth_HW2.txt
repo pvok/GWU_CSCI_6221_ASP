@@ -1,0 +1,27 @@
+
+import sys
+datatype = ["int","float","complex","bool","str","bytes","list","tuple","set","dict"]
+
+for i in range(len(datatype)):
+       
+        if datatype[i] == "int":
+            print ("Data type is:",datatype[i],".\nNumber of byte(s) used :", sys.getsizeof(datatype[i]),"\nRange", -sys.maxsize-1,"to", sys.maxsize,"\n")
+        elif datatype[i] == "float":
+            print ("Data type is:",datatype[i],".\nNumber of byte(s) used :", sys.getsizeof(datatype[i]),"\nRange", -sys.float_info.max,"to", sys.float_info.max,"\n")
+        elif datatype[i] == "complex":
+            print ("Data type is:",datatype[i],".\nNumber of byte(s) used :", sys.getsizeof(datatype[i]),"\nRange", -sys.float_info.max-sys.float_info.max*1j,"to", sys.float_info.max+sys.float_info.max*1j,"\n")
+        elif datatype[i] == "bool":
+            print ("Data type is:",datatype[i],".\nNumber of byte(s) used :", sys.getsizeof(datatype[i]),"\nRange", False,"to",True,"\n")
+        elif datatype[i] == "str":
+            print ("Data type is:",datatype[i],".\nNumber of byte(s) used :", sys.getsizeof(datatype[i]),"\nRange variable length","\n")
+        elif datatype[i] == "bytes":
+            print ("Data type is:",datatype[i],".\nNumber of byte(s) used :", sys.getsizeof(datatype[i]),"\nRange variable length","\n")
+        elif datatype[i] == "list":
+            print("Data type is:",datatype[i],".\nNumber of byte(s) used :" ,sys.getsizeof(datatype[i]),"\nRange variable length","\n")
+        elif datatype[i] == "tuple":
+            print("Data type is:",datatype[i],".\nNumber of byte(s) used :" ,sys.getsizeof(datatype[i]),"\nRange variable length","\n")
+        elif datatype[i] == "set":   
+            print("Data type is:",datatype[i],".\nNumber of byte(s) used :" ,sys.getsizeof(datatype[i]),"\nRange variable length","\n")  
+        elif datatype[i] == "dict":        
+            print("Data type is:",datatype[i],".\nNumber of byte(s) used :" ,sys.getsizeof(datatype[i]),"\nRange variable length","\n")
+

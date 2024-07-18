@@ -1,0 +1,40 @@
+/******************************************************************************
+
+                            Online Prolog Compiler.
+                Code, Compile, Run and Debug Prolog program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+
+read_int(Int) :-
+    write('Enter an integer: '),
+    read_line_to_codes(user_input, Codes),
+    number_codes(Int, Codes).
+
+main :-
+    write('Enter number of students: '),
+    read_int(N),
+    create_students(N, Students),
+    write('The students entered are: '), write(Students), nl,
+    halt.
+
+create_students(0, []).
+create_students(N, [H|T]) :-
+    write('Enter details for student '), write(N), write(':'), nl,
+    create_student(H),
+    N1 is N-1,
+    create_students(N1, T).
+    
+create_student(Student) :-
+    write('Enter student name: '),
+    read_line_to_string(user_input, NameStr),
+    string_to_atom(NameStr, Name),
+    write('Enter scores for six subjects: '),
+    read_int(HW1), read_int(HW2), read_int(HW3),
+    read_int(MIDTERM), read_int(FINALTERM), read_int(PROJECT),
+    Student = student(Name, HW1, HW2, HW3, MIDTERM, FINALTERM, PROJECT).
+
+
+:- main.
+
